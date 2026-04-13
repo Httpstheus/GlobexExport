@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeZone | Importação e Exportação</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            DEFAULT: '#dc2626', // Vermelho destaque
+                            hover: '#b91c1c'
+                        },
+                        darkBg: '#0a111a',
+                        darkCard: '#111827'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="//unpkg.com/three"></script>
+    <script src="//unpkg.com/globe.gl"></script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { margin: 0; padding: 0; overflow-x: hidden; transition: background-color 0.3s, color 0.3s; }
+        
+        .globe-container { width: 100%; height: 500px; display: flex; justify-content: center; align-items: center; cursor: grab; }
+        .globe-container:active { cursor: grabbing; }
+        
+        /* Estilos do FAQ */
+        .faq-item { transition: all 0.3s ease; }
+        .faq-answer { display: none; margin-top: 1rem; }
+        .faq-item.active .faq-answer { display: block; }
+        
+        /* Botão Flutuante WhatsApp */
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background-color: #25d366; color: white; width: 60px; height: 60px; border-radius: 50px; display: flex; justify-content: center; align-items: center; font-size: 28px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 1000; transition: transform 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        .whatsapp-text { display: none; position: absolute; right: 70px; background-color: white; color: #111; padding: 5px 10px; border-radius: 5px; font-size: 14px; width: max-content; font-weight: 500; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .whatsapp-float:hover .whatsapp-text { display: block; }
+    </style>
+</head>
+<body class="bg-white text-gray-900 dark:bg-darkBg dark:text-gray-100 antialiased">
+
+    <nav class="fixed w-full top-0 z-50 bg-white/90 dark:bg-darkBg/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            
+            <a href="#inicio" class="text-2xl font-extrabold text-gray-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-earth-americas text-brand"></i> Trade<span class="text-brand">Zone</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 font-medium">
+                <a href="#inicio" class="hover:text-brand transition-colors">Início</a>
+                <a href="#servicos" class="hover:text-brand transition-colors">Serviços</a>
+                <a href="#vantagens" class="hover:text-brand transition-colors">Vantagens</a>
+                <a href="#faq" class="hover:text-brand transition-colors">FAQ</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle" class="text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-white text-xl transition-colors">
+                    <i id="theme-toggle-icon" class="fa-solid fa-moon"></i>
+                </button>
+                <a href="https://wa.me/5500900000000" class="hidden sm:flex bg-brand hover:bg-brand-hover text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg shadow-brand/30 items-center">
+                    <i class="fa-brands fa-whatsapp mr-2"></i> Falar com Especialista
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="inicio" class="pt-32 pb-12 lg:pt-40 lg:pb-20 max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center gap-12 relative">
+        <div class="w-full lg:w-1/2 text-center lg:text-left z-10">
+            <div class="inline-block bg-red-100 dark:bg-brand/10 text-brand px-4 py-1 rounded-full text-sm font-bold mb-6 border border-brand/20">
+                🚀 Zero Burocracia na Logística Internacional
+            </div>
+            <h1 class="text-4xl lg:text-6xl font-extrabold leading-tight mb-6 text-gray-900 dark:text-white">
+                Você fecha a venda.<br>
+                <span class="text-brand">Nós fazemos o trabalho pesado.</span>
+            </h1>
+            <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-xl mx-auto lg:mx-0">
+                Da pesagem e embalagem até a documentação e compra dos produtos. Mastigamos todo o processo de importação e exportação para que sua única preocupação seja lucrar.
+            </p>
+            <a href="https://wa.me/5500900000000" class="inline-flex items-center justify-center bg-brand hover:bg-brand-hover text-white text-lg px-8 py-4 rounded-full font-bold transition-all duration-300 shadow-xl shadow-brand/20 transform hover:-translate-y-1">
+                <i class="fa-brands fa-whatsapp text-2xl mr-3"></i> Iniciar Atendimento via WhatsApp
+            </a>
+            <p class="mt-4 text-sm text-gray-500 dark:text-gray-400 font-medium"><i class="fa-solid fa-lock mr-1 text-brand"></i> Assessoria 100% segura e ágil.</p>
+        </div>
+        <div class="w-full lg:w-1/2 relative">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-brand/10 rounded-full blur-[100px] -z-10"></div>
+            <div id="globeViz" class="globe-container"></div>
+        </div>
+    </section>
+
+    <section id="servicos" class="bg-gray-50 dark:bg-darkCard/50 py-20 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl lg:text-4xl font-bold mb-4">Como "mastigamos" o processo para você</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Esqueça a papelada infinita e os processos complexos. Nossa equipe cuida de cada etapa da sua carga.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white dark:bg-darkCard p-8 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 hover:-translate-y-2 transition-transform duration-300 border-b-4 border-b-brand">
+                    <div class="w-14 h-14 bg-red-100 dark:bg-brand/20 rounded-xl flex items-center justify-center text-brand text-2xl mb-6"><i class="fa-solid fa-file-signature"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Burocracia Zero</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Lidamos com despachos aduaneiros, impostos e liberações alfandegárias sem dor de cabeça.</p>
+                </div>
+                <div class="bg-white dark:bg-darkCard p-8 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 hover:-translate-y-2 transition-transform duration-300 border-b-4 border-b-brand">
+                    <div class="w-14 h-14 bg-red-100 dark:bg-brand/20 rounded-xl flex items-center justify-center text-brand text-2xl mb-6"><i class="fa-solid fa-box-open"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Pesagem e Embalagem</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Preparamos sua carga seguindo todos os padrões internacionais de segurança e logística.</p>
+                </div>
+                <div class="bg-white dark:bg-darkCard p-8 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 hover:-translate-y-2 transition-transform duration-300 border-b-4 border-b-brand">
+                    <div class="w-14 h-14 bg-red-100 dark:bg-brand/20 rounded-xl flex items-center justify-center text-brand text-2xl mb-6"><i class="fa-solid fa-cart-shopping"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Compra de Produtos</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Precisa exportar? Nós mesmos localizamos fornecedores e compramos a mercadoria para você.</p>
+                </div>
+                <div class="bg-white dark:bg-darkCard p-8 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 hover:-translate-y-2 transition-transform duration-300 border-b-4 border-b-brand">
+                    <div class="w-14 h-14 bg-red-100 dark:bg-brand/20 rounded-xl flex items-center justify-center text-brand text-2xl mb-6"><i class="fa-solid fa-ship"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Frete Internacional</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Acompanhamento de ponta a ponta, garantindo que o produto chegue ao destino no prazo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vantagens" class="bg-white dark:bg-darkBg py-20 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-sm font-bold text-brand uppercase tracking-widest">O PROBLEMA QUE RESOLVEMOS</span>
+                <h2 class="text-3xl lg:text-4xl font-bold mb-4 mt-1">Antes vs. <span class="text-brand">depois</span> de nos contratar</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Veja como a experiência de importar e exportar muda completamente.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gray-50 dark:bg-darkCard p-10 rounded-2xl border-l-4 border-l-gray-400 dark:border-l-gray-600 shadow-md">
+                    <span class="text-gray-600 dark:text-gray-400 font-bold uppercase tracking-widest text-sm"><i class="fa-solid fa-times mr-2"></i>SEM NOSSA AJUDA</span>
+                    <ul class="space-y-4 mt-6 text-gray-700 dark:text-gray-300 font-medium">
+                        <li>• Horas pesquisando documentação e regulamentos</li>
+                        <li>• Risco de multas por erros na papelada</li>
+                        <li>• Dificuldade de encontrar fornecedores confiáveis</li>
+                        <li>• Embalagem errada pode reter o produto na alfândega</li>
+                        <li>• Tempo perdido que deveria estar no seu negócio</li>
+                    </ul>
+                </div>
+                <div class="bg-red-50 dark:bg-brand/10 p-10 rounded-2xl border-l-4 border-l-brand shadow-md">
+                    <span class="text-brand font-bold uppercase tracking-widest text-sm"><i class="fa-solid fa-check mr-2"></i>COM A TRADEZONE</span>
+                    <ul class="space-y-4 mt-6 text-gray-900 dark:text-gray-200 font-medium">
+                        <li>• Toda a burocracia resolvida por especialistas</li>
+                        <li>• Documentação correta na primeira tentativa</li>
+                        <li>• Compramos os produtos por você, se precisar</li>
+                        <li>• Pesagem e embalagem adequadas a cada destino</li>
+                        <li>• Você foca 100% no crescimento do seu negócio</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="bg-gray-50 dark:bg-darkCard/50 py-20 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-sm font-bold text-brand uppercase tracking-widest">DÚVIDAS FREQUENTES</span>
+                <h2 class="text-3xl lg:text-4xl font-bold mb-4 mt-1">Respostas <span class="text-brand">diretas</span></h2>
+            </div>
+            <div class="flex flex-col gap-4">
+                <div class="faq-item bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-800 rounded-xl p-6 shadow-sm cursor-pointer">
+                    <div class="faq-question flex justify-between items-center font-bold text-lg">
+                        <span>É seguro deixar tudo nas mãos de vocês?</span>
+                        <i class="fa-solid fa-plus text-brand"></i>
+                    </div>
+                    <div class="faq-answer text-gray-600 dark:text-gray-400">Totalmente seguro. Atuamos com transparência e contratos claros. Todos os nossos processos seguem rigorosos padrões internacionais de segurança.</div>
+                </div>
+                <div class="faq-item bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-800 rounded-xl p-6 shadow-sm cursor-pointer">
+                    <div class="faq-question flex justify-between items-center font-bold text-lg">
+                        <span>Quanto tempo leva para iniciar minha operação?</span>
+                        <i class="fa-solid fa-plus text-brand"></i>
+                    </div>
+                    <div class="faq-answer text-gray-600 dark:text-gray-400">Geralmente, conseguimos iniciar sua operação em 48 a 72 horas úteis após a aprovação do projeto e documentação inicial.</div>
+                </div>
+                <div class="faq-item bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-800 rounded-xl p-6 shadow-sm cursor-pointer">
+                    <div class="faq-question flex justify-between items-center font-bold text-lg">
+                        <span>Vale a pena financeiramente?</span>
+                        <i class="fa-solid fa-plus text-brand"></i>
+                    </div>
+                    <div class="faq-answer text-gray-600 dark:text-gray-400">Sim, muito. Além de economizar tempo, evitamos multas por erros documentais e reduzimos custos logísticos, otimizando o seu retorno financeiro.</div>
+                </div>
+                <div class="faq-item bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-800 rounded-xl p-6 shadow-sm cursor-pointer">
+                    <div class="faq-question flex justify-between items-center font-bold text-lg">
+                        <span>Vocês atendem importação e exportação?</span>
+                        <i class="fa-solid fa-plus text-brand"></i>
+                    </div>
+                    <div class="faq-answer text-gray-600 dark:text-gray-400">Atendemos ambas as modalidades com a mesma expertise, de ponta a ponta, para qualquer destino global.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white dark:bg-darkBg py-16 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 text-gray-600 dark:text-gray-400 text-sm">
+            <div class="flex flex-col gap-3">
+                <div class="text-2xl font-extrabold text-gray-900 dark:text-white flex items-center gap-2 mb-2">
+                    <i class="fa-solid fa-earth-americas text-brand"></i> Trade<span class="text-brand">Zone</span>
+                </div>
+                <p>Cuidando da sua logística global com transparência e agilidade. Focamos na burocracia para você focar no lucro.</p>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h4 class="text-gray-900 dark:text-white font-bold mb-2 text-base">Empresa</h4>
+                <p>Rua Exemplo, 1234, São Paulo - SP</p>
+                <p>CNPJ: 00.000.000/0000-00</p>
+                <p>contato@tradezone.com.br</p>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h4 class="text-gray-900 dark:text-white font-bold mb-2 text-base">Serviços</h4>
+                <a href="#servicos" class="hover:text-brand transition-colors">Importação Descomplicada</a>
+                <a href="#servicos" class="hover:text-brand transition-colors">Exportação Ágil</a>
+                <a href="#servicos" class="hover:text-brand transition-colors">Pesagem e Embalagem</a>
+                <a href="#servicos" class="hover:text-brand transition-colors">Consultoria Aduaneira</a>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h4 class="text-gray-900 dark:text-white font-bold mb-2 text-base">Redes Sociais</h4>
+                <div class="flex items-center gap-4 text-2xl text-gray-400 dark:text-gray-500">
+                    <a href="#" class="hover:text-brand transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-brand transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-brand transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-xs text-gray-500">
+            <p>© 2024 TRADEZONE. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5500900000000" class="whatsapp-float">
+        <span class="whatsapp-text">Falar com Especialista</span>
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Lógica do Theme Toggle (Claro/Escuro)
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleIcon = document.getElementById('theme-toggle-icon');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                themeToggleIcon.classList.remove('fa-moon');
+                themeToggleIcon.classList.add('fa-sun');
+            } else {
+                themeToggleIcon.classList.remove('fa-sun');
+                themeToggleIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Lógica do Globo 3D
+        const elem = document.getElementById('globeViz');
+        const width = elem.clientWidth;
+        const height = elem.clientHeight;
+        const arcsData = [
+            { startLat: -23.55, startLng: -46.63, endLat: 40.71, endLng: -74.00, color: ['#dc2626', '#3b82f6'] }, // Atualizado com cor vermelha
+            { startLat: -23.55, startLng: -46.63, endLat: 39.90, endLng: 116.40, color: ['#dc2626', '#f59e0b'] },
+            { startLat: -23.55, startLng: -46.63, endLat: 51.50, endLng: -0.12, color: ['#dc2626', '#8b5cf6'] },
+            { startLat: -23.55, startLng: -46.63, endLat: 25.20, endLng: 55.27, color: ['#dc2626', '#ec4899'] }
+        ];
+        
+        // O globo sempre manterá um tom escuro/elegante para contrastar com o fundo e as linhas
+        const myGlobe = Globe()
+            (elem)
+            .width(width)
+            .height(height)
+            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')
+            .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+            .backgroundColor('rgba(0,0,0,0)')
+            .arcsData(arcsData)
+            .arcColor('color')
+            .arcDashLength(0.4)
+            .arcDashGap(0.2)
+            .arcDashAnimateTime(1500)
+            .arcStroke(1);
+        myGlobe.controls().autoRotate = true;
+        myGlobe.controls().autoRotateSpeed = 1.2;
+        myGlobe.controls().enableZoom = false;
+        myGlobe.camera().position.z = 250;
+        
+        window.addEventListener('resize', () => {
+            myGlobe.width(elem.clientWidth);
+            myGlobe.height(elem.clientHeight);
+        });
+
+        // Lógica do FAQ
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const icon = item.querySelector('i');
+                // Fecha todos os outros antes de abrir o atual (Opcional, deixa o layout mais limpo)
+                faqItems.forEach(otherItem => {
+                    if(otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('i').classList.remove('fa-minus');
+                        otherItem.querySelector('i').classList.add('fa-plus');
+                    }
+                });
+
+                item.classList.toggle('active');
+                if (item.classList.contains('active')) {
+                    icon.classList.remove('fa-plus');
+                    icon.classList.add('fa-minus');
+                } else {
+                    icon.classList.remove('fa-minus');
+                    icon.classList.add('fa-plus');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
