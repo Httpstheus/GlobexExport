@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlobeXExpert - From Brazil to the World</title>
+    <title>GlobeXExport - From Brazil to the World</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link rel="shortcut icon" href="https://i.postimg.cc/SKHLjhZp/Globex.jpg" type="image/x-icon">
     <script src="//unpkg.com/three"></script>
     <script src="//unpkg.com/globe.gl"></script>
 
@@ -222,11 +222,15 @@
             color: var(--text-muted-dark);
         }
 
-        .hero-visual {
-            flex: 1;
-            width: 100%;
-            position: relative;
-        }
+.hero-visual {
+    flex: 1;
+    width: 100%;
+    min-width: 0; /* REGRA DE OURO: Impede que o canvas quebre o layout flexbox ao redimensionar */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
         .hero-glow {
             position: absolute;
@@ -241,14 +245,16 @@
             z-index: -1;
         }
 
-        .globe-container {
-            width: 80%;
-            height: 500px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: grab;
-        }
+.globe-container {
+    width: 100%;
+    max-width: 500px; /* Tamanho máximo que o globo pode chegar */
+    aspect-ratio: 1 / 1; /* Mantém o container sempre quadrado! */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+    z-index: 1;
+}
 
         .globe-container:active {
             cursor: grabbing;
@@ -609,9 +615,21 @@
                 padding-top: 160px;
             }
             .hero-content { text-align: left; }
-            .hero-title { font-size: 60px; }
+            .hero-title { font-size: 40px; }
             .hero-desc { margin-left: 0; }
             .section-title { font-size: 36px; }
+            .services-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        @media (min-width: 1260px) {
+            .hero {
+                flex-direction: row;
+                text-align: left;
+                padding-top: 120px;
+            }
+            .hero-content { text-align: left; }
+            .hero-title { font-size: 50px; }
+            .hero-desc { margin-left: 0; }
+            .section-title { font-size: 30px; }
             .services-grid { grid-template-columns: repeat(4, 1fr); }
         }
 
@@ -686,6 +704,11 @@
             font-size: 20px;
         }
 
+       .fechamento-badge i {
+            color: var(--brand);
+            font-size: 20px;
+        }
+
         .btn-sourcing {
             background-color: #ffffff;
             color: var(--brand);
@@ -751,6 +774,73 @@
                 font-size: 120px;
             }
         }
+
+        @media (max-width: 510px) {
+    .hero-visual {
+        display: none !important;
+    }
+}
+
+/* --- Fechamento / CTA Final --- */
+        .fechamento-section {
+            background: var(--bg-light-alt);
+            transition: background 0.3s;
+        }
+        
+        .dark .fechamento-section {
+            background: linear-gradient(135deg, #0a111a, #111827);
+        }
+
+        .fechamento-title {
+            color: var(--text-light);
+            max-width: 800px; 
+            margin: 0 auto 20px;
+            transition: color 0.3s;
+        }
+
+        .dark .fechamento-title {
+            color: #ffffff;
+        }
+
+        .fechamento-desc {
+            color: var(--text-muted-light);
+            max-width: 600px; 
+            margin: 0 auto 40px;
+            transition: color 0.3s;
+        }
+
+        .dark .fechamento-desc {
+            color: #9ca3af;
+        }
+
+        .fechamento-badge {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            padding: 16px 24px; 
+            border-radius: 12px;
+            color: var(--text-light);
+            font-weight: 500;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .dark .fechamento-badge {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.1);
+            color: #f3f4f6;
+            box-shadow: none;
+        }
+        
+        .fechamento-footer-text {
+            margin-top: 20px; 
+            font-size: 14px; 
+            color: var(--text-muted-light);
+            transition: color 0.3s;
+        }
+
+        .dark .fechamento-footer-text {
+            color: #6b7280;
+        }
     </style>
 </head>
 <body>
@@ -783,14 +873,15 @@
     <section id="inicio" class="hero container">
         <div class="hero-content">
             <h1 class="hero-title">
-                Você fecha a venda.<br>
-                <span class="text-brand">Nós fazemos o trabalho pesado.</span>
+                Você escolhe o produto.<br>
+                <span class="text-brand">A gente compra e entrega pra você.</span>
             </h1>
             <p class="hero-desc">
-                Da pesagem e embalagem até a documentação e compra dos produtos. Mastigamos todo o processo de importação e exportação para que sua única preocupação seja lucrar.
+                Zero burocracia, sem dor de cabeça. <br> Cuidamos de tudo: compra, embalagem e envio até o seu endereço no exterior.
+                <br><span style="color: var(--brand); font-weight: 600;">Sua  única preocupação é escolher</span>
             </p>
             <a href="https://api.whatsapp.com/send?phone=5511991528383&text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es!" target="_blank" class="btn-primary btn-large">
-                <i class="fa-brands fa-whatsapp" style="margin-right: 12px; font-size: 24px;"></i> Atendimento via WhatsApp
+                <i class="fa-brands fa-whatsapp" style="margin-right: 12px; font-size: 24px;"></i> Falar no WhatsApp
             </a>
         </div>
         <div class="hero-visual">
@@ -809,22 +900,30 @@
                 <div class="service-card">
                     <div class="service-icon"><i class="fa-solid fa-file-signature"></i></div>
                     <h3>Burocracia Zero</h3>
-                    <p>Lidamos com despachos aduaneiros, impostos e liberações alfandegárias sem dor de cabeça.</p>
+                    <p> <b>A gente cuida de toda parte complicada</b> <br>
+                         Documentação, taxas e envio - tudo resolvido pra você, sem dor de cabeça.
+                    </p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon"><i class="fa-solid fa-box-open"></i></div>
                     <h3>Pesagem e Embalagem</h3>
-                    <p>Preparamos sua carga seguindo todos os padrões internacionais de segurança e logística.</p>
+                    <p> <b>Seu produto protegido até chegar</b> <br>
+                         Embalamos corretamente para garantir segurança no transporte internacional.
+                    </p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon"><i class="fa-solid fa-cart-shopping"></i></div>
                     <h3>Compra de Produtos</h3>
-                    <p>Precisa exportar? Nós mesmos localizamos fornecedores e compramos a mercadoria para você.</p>
+                    <p> <b>Você não precisa comprar nada</b> <br>
+                         Só nos diga o que quer - nós encontramos e compramos pra você no Brasil.
+                    </p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon"><i class="fa-solid fa-ship"></i></div>
                     <h3>Frete Internacional</h3>
-                    <p>Acompanhamento de ponta a ponta, garantindo que o produto chegue ao destino no prazo.</p>
+                    <p> <b>Entrega no seu endereço, em qualquer lugar</b> <br>
+                         Acompanhamos todo o envio até chear com segurança até você.
+                    </p>
                 </div>
             </div>
         </div>
@@ -834,22 +933,24 @@
         <div class="container">
             <div class="sourcing-box">
                 <div class="sourcing-content">
-                    <span class="sourcing-subtitle">Assessoria de Compras e Despacho</span>
+                    <span class="sourcing-subtitle">Você escolhe. A gente resolve tudo.</span>
                     <h2 class="sourcing-title">
-                        Você escolhe o que quer.<br>
-                        <span style="color: #f1e86b;">Nós compramos por você.</span>
+                        Você escolhe o Encontramos o produto, compramos pra você<br>
+                        <span style="color: #f1e86b;">e  enviamos até sua casa no exterior</span>
                     </h2>
                     <p class="sourcing-desc">
-                        Esqueça a barreira do idioma, o medo de golpes ou a dor de cabeça com pagamentos internacionais. Nós localizamos os melhores fornecedores, negociamos os valores e realizamos a compra para você.
+                        Mora fora do Brasil? <br>
+                        Agora você pode comprar qualquer produto como se estivesse aqui!
                     </p>
                     
                     <ul class="sourcing-list">
-                        <li><i class="fa-solid fa-circle-check"></i> Busca de fornecedores qualificados e confiáveis.</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Negociação direta no idioma local.</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Compramos no Brasil pra você</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Negociamos com fornecedores</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Enviamos direto para seu endereço</li>
                     </ul>
 
                     <a href="https://api.whatsapp.com/send?phone=5511991528383&text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20a%20compra%20de%20produtos!" target="_blank" class="btn-sourcing">
-                        Falar sobre meu pedido
+                        Quero fazer meu pedido
                     </a>
                 </div>
                 <div class="sourcing-visual">
@@ -870,22 +971,22 @@
             </div>
             <div class="adv-grid">
                 <div class="adv-card adv-card-negative">
-                    <span class="adv-label adv-label-negative"><i class="fa-solid fa-times"></i> SEM NOSSA AJUDA</span>
+                    <span class="adv-label adv-label-negative"><i class="fa-solid fa-times"></i> Sem a GlobeX</span>
                     <ul class="adv-list">
-                        <li>• Horas pesquisando documentação e regulamentos</li>
-                        <li>• Risco de multas por erros na papelada</li>
-                        <li>• Dificuldade de encontrar fornecedores confiáveis</li>
-                        <li>• Embalagem errada pode reter o produto na alfândega</li>
-                        <li>• Tempo perdido que deveria estar no seu negócio</li>
+                        <li>• Perde tempo tentando comprar no Brasil</li>
+                        <li>• Não sabe se o site é confiável</li>
+                        <li>• Dificuldade com pagamento internacional</li>
+                        <li>• Dor de cabeça com envio e taxas</li>
                     </ul>
                 </div>
                 <div class="adv-card adv-card-positive">
                     <span class="adv-label adv-label-positive"><i class="fa-solid fa-check"></i> COM A GLOBEX EXPORT</span>
                     <ul class="adv-list">
-                        <li>• Praticidade e agilizade para resolução</li>
-                        <li>• Documentação correta para facilitar o processo</li>
-                        <li>• Compramos os produtos por você, se precisar</li>
-                        <li>• Pesagem e embalagem adequadas a cada destino</li>
+                        <li>• Você só escolhe o produto</li>
+                        <li>• Nós compramos pra você</li>
+                        <li>• Cuidamos de tudo</li>
+                        <li>• Entregamos direto na sua casa</li>
+                        <li> <span style="color: var(--brand); font-weight: 600;"><b>Simples Assim</b></span></li>
                     </ul>
                 </div>
             </div>
@@ -928,6 +1029,37 @@
                     <div class="faq-answer">Atendemos ambas as modalidades com a mesma expertise, de ponta a ponta, para qualquer destino global.</div>
                 </div>
             </div>
+        </div>
+
+    </section>
+
+<section id="fechamento" class="section fechamento-section">
+        <div class="container" style="text-align: center;">
+            
+            <h2 class="section-title fechamento-title">
+                Você já entendeu como funciona.<br>
+                <span style="color: var(--brand);">Agora só falta começar.</span>
+            </h2>
+
+            <p class="section-desc fechamento-desc">
+                Enquanto você pensa, outras pessoas já estão recebendo seus produtos no exterior sem dor de cabeça.
+                <br><br>
+                A diferença entre quem consegue e quem fica travado é simples: <b>ação.</b>
+            </p>
+
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-bottom: 40px;">
+                <div class="fechamento-badge"> <i class="fa-solid fa-circle-check "></i> Resposta rápida</div>
+                <div class="fechamento-badge"> <i class="fa-solid fa-circle-check"></i> Processo seguro</div>
+                <div class="fechamento-badge"> <i class="fa-solid fa-circle-check"></i> Envio global</div>
+            </div>
+
+            <a href="https://api.whatsapp.com/send?phone=5511991528383&text=Quero%20come%C3%A7ar%20agora!" 
+               target="_blank" 
+               class="btn-primary btn-large"
+               style="display: inline-flex; justify-content: center;">
+                Fazer meu pedido
+            </a>
+
         </div>
     </section>
 
@@ -1010,10 +1142,22 @@
         myGlobe.controls().enableZoom = false;
         myGlobe.camera().position.z = 250;
         
-        window.addEventListener('resize', () => {
-            myGlobe.width(elem.clientWidth);
-            myGlobe.height(elem.clientHeight);
-        });
+window.addEventListener('resize', () => {
+    const canvas = elem.querySelector('canvas');
+    
+    // 1. Esconde o canvas temporariamente para o Flexbox recalcular o espaço real
+    if (canvas) canvas.style.display = 'none';
+    
+    // 2. Pega as novas medidas do container
+    const newWidth = elem.clientWidth;
+    const newHeight = elem.clientHeight;
+    
+    // 3. Devolve o canvas pra tela e aplica os tamanhos
+    if (canvas) canvas.style.display = 'block';
+    
+    myGlobe.width(newWidth);
+    myGlobe.height(newHeight);
+});
 
         // Lógica do FAQ
         const faqItems = document.querySelectorAll('.faq-item');
